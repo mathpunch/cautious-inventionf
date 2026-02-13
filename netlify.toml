@@ -2,19 +2,21 @@
   command = "npm run build"
   publish = "."
 
+# This section ensures HTML files are treated as HTML
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Content-Type = "text/html"
+
+# This section is CRITICAL for the proxy engine
 [[headers]]
   for = "/*"
   [headers.values]
     Cross-Origin-Opener-Policy = "same-origin"
     Cross-Origin-Embedder-Policy = "require-corp"
     Service-Worker-Allowed = "/"
-    Content-Type = "application/javascript"
 
-[[headers]]
-  for = "/uv/*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
-
+# This ensures that when you go to a proxied site, it doesn't 404
 [[redirects]]
   from = "/service/*"
   to = "/index.html"
