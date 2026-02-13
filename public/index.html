@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Nova Static</title>
-    <script src="uv/uv.bundle.js"></script>
-    <script src="uv/uv.config.js"></script>
+    <title>Nova Proxy</title>
+    <script src="/uv/uv.bundle.js"></script>
+    <script src="/uv/uv.config.js"></script>
 </head>
 <body>
-    <h1>Nova Proxy (Static Mode)</h1>
+    <h1>Nova Proxy</h1>
     <input id="url" type="text" placeholder="Enter URL (e.g. google.com)">
-    <button onclick="launch()">Go</button>
+    <button id="go-btn">Go</button>
 
     <script>
-        async function launch() {
-            const input = document.getElementById('url').value;
-            let url = input.trim();
+        const btn = document.getElementById('go-btn');
+        const input = document.getElementById('url');
+
+        btn.onclick = async () => {
+            let url = input.value.trim();
+            if (!url) return;
+            if (!url.includes('.')) url = 'https://www.google.com/search?q=' + url;
             if (!url.startsWith('http')) url = 'https://' + url;
 
-            // Register the Service Worker
-            await navigator.serviceWorker.register('./uv/uv.sw.js', {
-                scope: __uv$config.prefix
-            });
-
-            // Redirect to the proxied URL
-            window.location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
-        }
+            console.log('Registering SW...');
+            
+            try {
+                // Register the service worker at the root scope
+                await navigator.serviceWorker.register('/uv/uv.sw.js', {
+                    scope: __uv$config.prefix
+                });
+                
+                // Redirect to the encoded URL
+                window.location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
+            } catch (err) {
+                alert('Proxy failed to start. Check console (F12).');
+                console.error(err);
+            }
+        };
     </script>
 </body>
 </html>
