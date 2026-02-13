@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "mkdir -p uv && cp -r node_modules/@titaniumnetwork-dev/ultraviolet/dist/* ./uv/"
+    "build": "mkdir -p uv && cp -rv node_modules/@titaniumnetwork-dev/ultraviolet/dist/* ./uv/"
   },
   "dependencies": {
     "@titaniumnetwork-dev/ultraviolet": "^3.2.10"
