@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>Nova Proxy</title>
-    <script src="/uv/uv.bundle.js"></script>
-    <script src="/uv/uv.config.js"></script>
+    <script src="/uv.bundle.js"></script>
+    <script src="/uv.config.js"></script>
 </head>
 <body>
     <h1>Nova Proxy</h1>
@@ -18,8 +18,8 @@
             if (!url.startsWith('http')) url = 'https://' + url;
 
             try {
-                // The '?v=' + Date.now() forces a fresh download to fix the EventEmitter error
-                await navigator.serviceWorker.register('/uv/uv.sw.js?v=' + Date.now(), {
+                // Register using the root path
+                await navigator.serviceWorker.register('/uv.sw.js', {
                     scope: __uv$config.prefix
                 });
                 location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
