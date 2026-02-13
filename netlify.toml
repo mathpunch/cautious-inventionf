@@ -8,6 +8,12 @@
     Cross-Origin-Opener-Policy = "same-origin"
     Cross-Origin-Embedder-Policy = "require-corp"
     Service-Worker-Allowed = "/"
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/uv/*.js"
+  [headers.values]
+    Content-Type = "application/javascript"
 
 [[redirects]]
   from = "/service/*"
